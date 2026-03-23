@@ -1,4 +1,5 @@
 / {
+    /* Keep prospector's C code happy with a dummy PWM LED */
     pwmleds {
         compatible = "pwm-leds";
         disp_bl: pwm_led_1 {
@@ -6,25 +7,26 @@
         };
     };
 
-    /* Force the backlight pin HIGH continuously (Digital 1) */
-    lcd_backlight_en {
-        compatible = "regulator-fixed";
-        regulator-name = "lcd_backlight_enable";
-        enable-gpios = <&pro_micro 3 GPIO_ACTIVE_HIGH>;
-        regulator-always-on;
+    /* Force the physical BL pin HIGH on boot! (Digital 1) */
+    leds {
+        compatible = "gpio-leds";
+        lcd_backlight_en: led_lcd_bl {
+            gpios = <&pro_micro 3 GPIO_ACTIVE_HIGH>;
+            default-state = "on";
+        };
     };
 };
 
 &pinctrl {
     pwm1_default: pwm1_default {
         group1 {
-            psels = <NRF_PSEL(PWM_OUT0, 1, 1)>; /* dummy pin P1.01 */
+            psels = <NRF_PSEL(PWM_OUT0, 1, 1)>; /* Dummy pin P1.01 */
         };
     };
 
     pwm1_sleep: pwm1_sleep {
         group1 {
-            psels = <NRF_PSEL(PWM_OUT0, 1, 1)>; /* dummy pin P1.01 */
+            psels = <NRF_PSEL(PWM_OUT0, 1, 1)>; /* Dummy pin P1.01 */
             low-power-enable;
         };
     };
