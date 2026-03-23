@@ -11,7 +11,6 @@
     pwm1_default: pwm1_default {
         group1 {
             psels = <NRF_PSEL(PWM_OUT0, 0, 15)>; /* pro_micro 3 / D3 */
-            nordic,invert;
         };
     };
 
